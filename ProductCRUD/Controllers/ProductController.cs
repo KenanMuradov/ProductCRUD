@@ -44,5 +44,17 @@ namespace ProductCRUD.Controllers
             }
             return View(product);
         }
+
+        public IActionResult DeleteProduct(int id)
+        {
+            Product? product = null;
+            product = _products.Find(p => p.Id == id);
+
+            if(product != null)
+            {
+                _products.Remove(product);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

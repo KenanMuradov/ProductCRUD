@@ -13,6 +13,9 @@
                     <li class="list-group-item bg-secondary text-white">Price: @Model[i].Price</li>
                     <li class="list-group-item bg-secondary text-white">Count: @Model[i].Count</li>
                     <li class="list-group-item bg-secondary text-white">Description: @Model[i].Description</li>
+                    <li class="list-group-item bg-secondary text-white">
+                        <a class="btn btn-primary" href="@Url.Action("DeleteProduct","Product", new { Model[i].Id })">Delete</a>
+                    </li>
                 </ul>
             </div>
         }
