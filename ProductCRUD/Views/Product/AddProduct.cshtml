@@ -1,0 +1,9 @@
+﻿@model Product
+<form asp-controller="Product" asp-action="AddProduct" method="post">
+    <input type="text" class="form-control my-2" asp-for="@Model.Name" placeholder="Product Name" required="required"/>
+    <input type="text" class="form-control my-2" asp-for="@Model.Category" placeholder="Product Category" required="required" />
+    <input type="number" class="form-control my-2" asp-for="@Model.Price" placeholder="Product Price" required="required" />
+    <input type="number" class="form-control my-2" asp-for="@Model.Count" placeholder="Product Count" required="required" />
+    <textarea class="form-control my-2" asp-for="@Model.Description" placeholder="Product Description" required="required"></textarea>
+    <button type="submit" style="width: 120px" class="btn text-center btn-primary my-1">Add</button>
+</form>
