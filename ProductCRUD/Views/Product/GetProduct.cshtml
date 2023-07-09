@@ -2,24 +2,21 @@
 @{
     if(Model is null)
     {
-        <h2 class="text-center">Product with such ID or name not found</h2>
+        <h2 class="text-center text-info">Product with such ID or name not found</h2>
     }
     else
     {
-        <div class="card m-3 text-center" style="width: 16rem;">
-            <div class="card-header">
-                Product Id: @Model.Id
-            </div>
+        <div class="card m-3" style="width: 16rem;">
+            <img style="width: 230px; height: 175px; object-fit: contain" src="@Url.Content( Model.ImageLink == null ? "~/image/imageError.png" : Model.ImageLink)" class="card-img-top" alt="..." />
             <ul class="list-group list-group-flush">
+                <li class="list-group-item"> Product Id: @Model.Id</li>
                 <li class="list-group-item">Name: @Model.Name</li>
                 <li class="list-group-item">Category: @Model.Category</li>
                 <li class="list-group-item">Price: @Model.Price</li>
                 <li class="list-group-item">Count: @Model.Count</li>
-            </ul>
-            <div class="card-footer">
-                Description: @Model.Description<br />
+                <li class="list-group-item">Description: @Model.Description</li>
                 <a class="btn btn-primary my-1" asp-controller="Product" asp-action="SearchProduct">Close</a>
-            </div>
+            </ul>
         </div>
     }
 }
