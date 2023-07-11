@@ -1,21 +1,24 @@
 ﻿@model Product
 @{
-    if(Model is null)
+    if (Model is null)
     {
         <h2 class="text-center text-info">Product with such ID or name not found</h2>
     }
     else
     {
-        <div class="card m-3" style="width: 16rem;">
-            <img style="width: 230px; height: 175px; object-fit: contain" src="@Url.Content( Model.ImageLink == null ? "~/image/imageError.png" : Model.ImageLink)" class="card-img-top" alt="..." />
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"> Product Id: @Model.Id</li>
-                <li class="list-group-item">Name: @Model.Name</li>
-                <li class="list-group-item">Category: @Model.Category</li>
-                <li class="list-group-item">Price: @Model.Price</li>
-                <li class="list-group-item">Count: @Model.Count</li>
-                <li class="list-group-item">Description: @Model.Description</li>
-                <a class="btn btn-primary my-1" asp-controller="Product" asp-action="SearchProduct">Close</a>
+        <div class="card m-3 bg-secondary text-white" style="width: 16rem;">
+            <img style="width: 230px; height: 175px; object-fit: contain" src="@Url.Content( Model.ImageLink == null ? "~/image/noresult.png" : Model.ImageLink)" class="card-img-top" alt="..." />
+            <ul class="list-group list-group-flush bg-secondary">
+                <li class="list-group-item bg-secondary text-white"> Product Id: @Model.Id</li>
+                <li class="list-group-item bg-secondary text-white">Name: @Model.Name</li>
+                <li class="list-group-item bg-secondary text-white">Category: @Model.Category</li>
+                <li class="list-group-item bg-secondary text-white">Price: @Model.Price</li>
+                <li class="list-group-item bg-secondary text-white">Count: @Model.Count</li>
+                <li class="list-group-item bg-secondary text-white">Description: @Model.Description</li>
+                <li class="list-group-item bg-secondary text-white">
+                    <a class="btn btn-primary m-auto" style="width:45%" href="@Url.Action("DeleteProduct","Product", new { Model.Id })">Delete</a>
+                    <a class="btn btn-primary m-auto" style="width:45%" href="@Url.Action("AddProduct","Product", new { Model.Id })">Edit</a>
+                </li>
             </ul>
         </div>
     }

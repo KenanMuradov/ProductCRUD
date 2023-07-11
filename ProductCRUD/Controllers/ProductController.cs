@@ -12,29 +12,38 @@ namespace ProductCRUD.Controllers
             return View(_products);
         }
 
-        [HttpGet]
-        public IActionResult AddProduct() 
+        public IActionResult AddProduct(Guid? id)
         {
-            return View();
+            if (id == null)
+                return View();
+            else
+            {
+                var product = _products.Find(p => p.Id == id);
+                return View(product);
+            }
+
         }
 
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
-            product.Id = _products.Count + 1;
-            _products.Add(product);
+            if (product.Id is null)
+            {
+                product.Id = Guid.NewGuid();
+                _products.Add(product);
+            }
+            else
+            {
+                var index = _products.IndexOf(_products.Find(p => p.Id == product.Id)!);
+                _products[index] = product;
+            }
             return RedirectToAction("Index");
-        }
-
-        public IActionResult SearchProduct()
-        {
-            return View();
         }
 
         public IActionResult GetProduct(string searchProperty)
         {
             Product? product = null;
-            if (int.TryParse(searchProperty, out int id))
+            if (Guid.TryParse(searchProperty, out Guid id))
             {
                 product = _products.Find(p => p.Id == id);
             }
@@ -45,12 +54,12 @@ namespace ProductCRUD.Controllers
             return View(product);
         }
 
-        public IActionResult DeleteProduct(int id)
+        public IActionResult DeleteProduct(Guid id)
         {
             Product? product = null;
             product = _products.Find(p => p.Id == id);
 
-            if(product != null)
+            if (product != null)
             {
                 _products.Remove(product);
             }
