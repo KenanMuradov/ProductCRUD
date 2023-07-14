@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ProductCRUD.Models;
+using ProductCRUD.Models.ViewModels;
 
 namespace ProductCRUD.Controllers
 {
     public class ProductController : Controller
     {
         private static List<Product> _products = new();
-
+        private static IMapper _mapper;
+        public ProductController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+        // 898756bc-56a8-415f-a1b3-a71b8afa9c29
         public IActionResult Index()
         {
             return View(_products);
@@ -19,23 +26,27 @@ namespace ProductCRUD.Controllers
             else
             {
                 var product = _products.Find(p => p.Id == id);
-                return View(product);
+                ViewData["id"] = product?.Id;
+                if (product != null)
+                    return View(_mapper.Map<Product, ProductViewModel>(product));
+                else
+                    return RedirectToAction("Index");
             }
 
         }
 
         [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public IActionResult AddProduct(ProductViewModel product, Guid? id)
         {
-            if (product.Id is null)
+            if (id is null)
             {
-                product.Id = Guid.NewGuid();
-                _products.Add(product);
+                var newProduct = _mapper.Map<Product>(product);
+                _products.Add(newProduct);
             }
             else
             {
-                var index = _products.IndexOf(_products.Find(p => p.Id == product.Id)!);
-                _products[index] = product;
+                var index = _products.IndexOf(_products.Find(p => p.Id == id)!);
+                _mapper.Map(product, _products[index]);
             }
             return RedirectToAction("Index");
         }

@@ -1,13 +1,24 @@
-﻿namespace ProductCRUD.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProductCRUD.Models.ViewModels
 {
-    public class Product
+    public class ProductViewModel
     {
-        public Guid? Id { get; set; } = Guid.NewGuid();
+        [Required]
         public string? Name { get; set; }
+
+        [Required]
         public string? Description { get; set; }
+
+        [Required]
         public string? Category { get; set; }
+
+        [Required]
         public double Price { get; set; }
+
+        [Required]
         public int Count { get; set; }
+
         public string? ImageLink { get; set; } = null;
     }
 }
